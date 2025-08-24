@@ -1,9 +1,7 @@
 (* Simple Enigma Machine - Everything in one file *)
 
-
-
 (* Import configuration *)
-let config = Config.config
+open Config
 
 (* Step 2: Plugboard *)
 let apply_plugboard plugboard c =
@@ -118,15 +116,19 @@ let process_file input_path output_path config encrypt =
   write_file output_path processed
 
 let process_input_folder input_dir output_dir config encrypt =
-  let input_path = Filename.concat input_dir "challenge.txt" in
-  let output_path = Filename.concat output_dir "challenge.txt" in
-  if Sys.file_exists input_path then
-    process_file input_path output_path config encrypt
+  let files = Array.to_list (Sys.readdir input_dir) in
+  let process_file_if_exists filename =
+    let input_path = Filename.concat input_dir filename in
+    let output_path = Filename.concat output_dir filename in
+    if Sys.file_exists input_path then
+      process_file input_path output_path config encrypt
+  in
+  List.iter process_file_if_exists files
 
 let usage () =
   Printf.printf "Usage: enigma [encrypt|decrypt]\n";
-  Printf.printf "  encrypt - encrypt challenge.txt\n";
-  Printf.printf "  decrypt - decrypt challenge.txt\n"
+  Printf.printf "  encrypt - encrypt all files in input/\n";
+  Printf.printf "  decrypt - decrypt all files in output/\n"
 
 let main () =
   let argc = Array.length Sys.argv in
