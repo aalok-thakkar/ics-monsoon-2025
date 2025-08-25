@@ -124,7 +124,7 @@ Your challenge is to recreate this breakthrough using modern programming techniq
    ./run.sh encrypt
    ```
 
-2. **Look at the encrypted output** in `output/challenge.txt` - this is what you need to break!
+2. **Look at the encrypted output** in `output/sample.txt` - this is what you need to break!
 
 3. **Your task**: Write a program that can find the correct settings (positions=ABC, plugboard=AZ,BD) just by looking at the encrypted text.
 
