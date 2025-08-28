@@ -67,6 +67,16 @@ This simulates what the German military would do - encrypt messages using their 
 
 This is what happens when you successfully break the code and know the correct configuration.
 
+### This Enigma Implementation
+
+This tool provides a simplified Enigma with:
+
+- **3 rotors** in fixed order (I, II, III)
+- **Fixed ring settings** (A-A-A)
+- **Fixed reflector** (Reflector B)
+- **Up to 2 plugboard swaps** (e.g., A↔Z, B↔D)
+- **Configurable starting positions** (3 letters)
+
 ## The Real Challenge: Code Breaking
 
 The true assignment is to implement a **code-breaking system** that can:
@@ -85,59 +95,5 @@ Instead of brute force, implement logic similar to Turing's Bombe:
 3. **Test rotor positions systematically** based on likely patterns
 4. **Eliminate impossible plugboard combinations** early
 5. **Use cribs** (known plaintext-ciphertext pairs) to narrow down possibilities
-
-### Your Enigma Implementation
-
-This tool provides a simplified Enigma with:
-
-- **3 rotors** in fixed order (I, II, III)
-- **Fixed ring settings** (A-A-A)
-- **Fixed reflector** (Reflector B)
-- **Up to 2 plugboard swaps** (e.g., A↔Z, B↔D)
-- **Configurable starting positions** (3 letters)
-
-The `config` type represents:
-```ocaml
-type config = {
-  rotors: int list;           (* Fixed: [1,2,3] *)
-  positions: int list;        (* 3 letters to find *)
-  ring_settings: int list;    (* Fixed: [0,0,0] *)
-  plugboard: (char * char) list; (* Up to 2 swaps to find *)
-}
-```
-
-## Historical Context
-
-The breaking of Enigma was one of the most significant achievements in cryptography and computer science. It involved:
-
-- **Alan Turing's** mathematical insights and machine design
-- **Gordon Welchman's** diagonal board improvements
-- **Thousands of people** working at Bletchley Park
-- **The development of early computers** and cryptanalysis techniques
-
-Your challenge is to recreate this breakthrough using modern programming techniques and computational power.
-
-## Your First Challenge
-
-1. **Encrypt a message** using the current settings:
-   ```bash
-   ./run.sh encrypt
-   ```
-
-2. **Look at the encrypted output** in `output/sample.txt` - this is what you need to break!
-
-3. **Your task**: Write a program that can find the correct settings (positions=ABC, plugboard=AZ,BD) just by looking at the encrypted text.
-
-4. **Hint**: Start with a brute-force approach, then optimize it using frequency analysis and known patterns.
-
-## Getting Started
-
-1. **Understand the Enigma mechanism** by studying the code in `enigma.ml`
-2. **Implement a brute-force approach** first to understand the problem
-3. **Add intelligent heuristics** to reduce the search space
-4. **Test with known plaintext-ciphertext pairs**
-5. **Optimize your algorithm** to break codes efficiently
-
-Remember: The goal isn't just to decrypt messages, but to understand and implement the cryptographic principles that made breaking Enigma possible.
 
 Good luck, code breaker!
