@@ -628,8 +628,8 @@ let divmod (a : int) (b : int) : (int * int) =
 
 let is_odd (n : int) : bool = 
     match (n mod 2) with 
-    | 0 -> true
-    | _ -> false
+    | 0 -> False
+    | _ -> True
 
 let collatz (n : int) : int = 
     match (is_odd n) with 
