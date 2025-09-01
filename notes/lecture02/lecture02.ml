@@ -639,9 +639,3 @@ let rec nat_to_int (n : nat) : int = raise (Not_implemented "Not implemented")
 *)
 
 let rec int_to_nat (n : int) : nat = raise (Not_implemented "Not implemented")
-
-
-
-
-
-(* How do you multiply? *)
