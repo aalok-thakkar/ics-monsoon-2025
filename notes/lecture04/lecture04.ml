@@ -349,39 +349,6 @@ let rec pingala_exp (base : int) (power : int) : int =
 
 
 
-(* Who builds a skyscrapper without a blueprint?*)
-
-
-
-(* Leslie Lamport, recipient of the 2013 Turing Award, has long advocated for
-   rigorous specifications in software development. His fundamental insight is
-   that specifications serve as a contract between the implementer and user of
-   code, clearly defining expected behavior.
-
-   Without specifications, programmers often:
-   - Make incorrect assumptions about how code should behave
-   - Miss edge cases and error conditions 
-   - Create brittle implementations tied to specific use cases
-   - Have difficulty maintaining and evolving code over time
-
-
-
-
-
-   "Architects draw detailed plans before a brick is laid or a nail is hammered. 
-   But few programmers write even a rough sketch of what their programs will do 
-   before they start coding. We can learn from architects."
-   - Leslie Lamport
-
- Full Talk: https://www.youtube.com/watch?v=iCRqE59VXT0 
- 
- *)
-
-(* In this course, our blueprints take the form of requires/ensures clauses:
-   - requires: preconditions that must be true before calling the function
-   - ensures: postconditions guaranteed to be true after the function returns
-*)
-
 
 
 
