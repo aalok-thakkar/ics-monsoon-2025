@@ -1,0 +1,30 @@
+<<header
+assignment: Assignment 1
+student: [NAME]
+date: [DATE]
+collaborators: None
+problem: Problem 4: Stalin Sort
+header>>
+
+<<problem 1: Problem 4: Stalin Sort
+<<blueprint
+requires:
+
+
+ensures:
+
+blueprint>>
+
+<<operational steps
+
+operational steps>>
+
+<<ocaml code
+
+ocaml code>>
+
+<<proof
+
+proof>>
+
+problem>>

@@ -1,0 +1,30 @@
+<<header
+assignment: Assignment 1
+student: [NAME]
+date: [DATE]
+collaborators: None
+problem: Problem 1: Division is Repeated Addition
+header>>
+
+<<problem 1: Problem 1: Division is Repeated Addition
+<<blueprint
+requires:
+
+
+ensures:
+
+blueprint>>
+
+<<operational steps
+
+operational steps>>
+
+<<ocaml code
+
+ocaml code>>
+
+<<proof
+
+proof>>
+
+problem>>
