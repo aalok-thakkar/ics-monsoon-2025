@@ -23,6 +23,13 @@ let rec foldr (f: 'a -> 'b -> 'b) (v: 'b) (l: 'a list) : 'b =
   | [] -> v
   | h :: tail -> f h (foldr f v tail)
 
+
+
+
+
+
+
+
 let length (l: 'a list) = foldr (fun x y -> 1 + y) 0 l
 
 
@@ -47,7 +54,14 @@ let funkyfold2 (p: 'a -> bool) (l: 'a list) : 'a list =
 
   
 
+(* foldl f v [a1; a2; a3] = 
+  match l with 
+  | [] -> []
+  | h :: t -> foldl f (f v a1) [a2; a3]
 
+
+
+*)
 
 
 
@@ -61,21 +75,26 @@ let funkyfold2 (p: 'a -> bool) (l: 'a list) : 'a list =
 let rec foldl (f: 'b -> 'a -> 'b) (v: 'b) (l: 'a list) : 'b =
   match l with
   | [] -> v
-  | x :: xs -> foldl f (f v x) xs
+  | h :: t -> foldl f (f v h) t
 
-let sumlist_l (l : int list) = foldl ( + ) 0 l
+
+let sumlist_l (l : int list) = foldl (+) 0 l
 
 (* 
 
   sumlist_l [1; 4; 34; 12]
-= foldl ( + ) 0 [1; 4; 34; 12]
-= foldl ( + ) (0 + 1) [4; 34; 12]
-= foldl ( + ) (0 + 1 + 4) [34; 12]
-= foldl ( + ) (0 + 1 + 4 + 34) [12]
-= foldl ( + ) (0 + 1 + 4 + 34 + 12) []
-= (0 + 1 + 4 + 34 + 12)
+  = foldl (+) 0 [1; 4; 34; 12]
+  = foldl (+) (0 + 1) [4; 34; 12]
+  = foldl (+) ((0 + 1) + 4) [34; 12]
+  = foldl (+) (((0 + 1) + 4) + 34) [12]
+  = foldl (+) ((((0 + 1) + 4) + 34) + 12) []
+  = foldl (+) ((((0 + 1) + 4) + 34) + 12) []
+  = ((((0 + 1) + 4) + 34) + 12)
 
 *)
+
+
+
 
 
 (* Try subtraction on foldl and foldr and see they are different *)
@@ -87,6 +106,35 @@ let sumlist_l (l : int list) = foldl ( + ) 0 l
 let reverse (l : 'a list) : 'a list = 
   foldl (fun x y -> y :: x) [] l
 
+(* 
+
+   reverse l v
+ = reverse [a1; a2; a3] []
+ = reverse [a2; a3] [a1]
+ = reverse [a3] [a2; a1]
+ = reverse [] [a3; a2; a1]
+ = [a3; a2; a1]
+
+ The function f is that which takes in 
+ h from l = h :: t
+ and v and gives us (f v h)
+
+ f v h -> h :: v
+
+
+ foldl (fun v h -> h :: v) [] l 
+
+
+*)
+
+
+
+
+
+
+
+
+
 (*  reverse [1; 2; 3] 
   = foldl f [] [1; 2; 3]
   = foldl f [1] [2; 3]
@@ -97,11 +145,7 @@ let reverse (l : 'a list) : 'a list =
 
 
 
-
-
-
-(* Can you write reverse with foldr? *)
-
+(* Exercise: Can you write reverse with foldr? *)
 
 
 
@@ -120,17 +164,7 @@ let reverse (l : 'a list) : 'a list =
 
 
 
-(* Init as Unfolding *) 
-let rec init (n : int) (f : int -> 'a) : 'a list =
-  match n with 
-  | _ when n <= 0 -> []
-  | _ -> (init (n - 1) f) @ [f n]
-
-
-(* Compute [f(1), f(2), f(3), ... , f(n)]*)
-
-
-
+ 
 
 
 
@@ -268,7 +302,8 @@ let is_safe (new_queen : int * int) (existing_queens : (int * int) list) : bool 
 
 (* Helper function: Generate all possible positions for the next row *)
 let next_row (existing_queens: (int * int) list) (n: int) (r: int) : (int * int) list  =
-  init n (fun x-> (x, r))                             (* make a list of all positions *)
+  range 0 (n - 1)
+  |> map (fun x -> (x, r)) (* make a list of all positions *)
   |> filter (fun q -> is_safe q existing_queens)      (* and then you filter *)
 
 
@@ -287,7 +322,7 @@ let n_queens n = solve n 0 []
 (* Representation of a chessboard as a list of lists of strings *)
 
 let chessboard_row (c : int) (n : int) : string = 
-  init n (fun x -> x)
+  range 0 (n - 1) 
   |> map (fun x -> if (x = c) then "Q" else "-")
   |> foldr (fun x s -> x ^ " " ^ s) ""
 
@@ -307,8 +342,8 @@ let rec print_solutions solutions =
       print_endline "----------";
       print_solutions xs
 
-  
-let n = 10
+
+let () = print_solutions (n_queens 12)
 
 
 
