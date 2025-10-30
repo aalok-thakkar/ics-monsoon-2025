@@ -118,15 +118,55 @@ let div (a : nat) (b : nat) : (int * nat) =
 (* The Integer Square Root Question *)
 
 
-(* Given a number n > 0, find an a such that: 
+(* Given a number n >= 0, find an a such that: 
 
   a^2 <= n < (a + 1)^2  
   
 *)
 
 
+(* Requires: n >= 0
+   Ensures: 
+   (i) a^2 <= n
+   (ii) n < (a+1)^2
+*)
 
 
+(* Case I: 
+    Loop Condition:    a^2 > n
+    Loop Invariant:    n < (a+1)^2
+*)
+
+
+(* 
+
+a = ref (n + 1)
+
+while ((!a)^ > n) do  
+      a := !a - 1
+done
+!a
+      
+*)
+
+
+
+(* Case II: 
+    Loop Condition:    n >= (a+1)^2
+    Loop Invariant:    a^2 <= n
+*)
+
+
+(* 
+
+a = ref 0
+
+while (n >= (a+1)^2) do 
+  a := !a + 1
+done
+!a
+
+*)
 
 
 
@@ -175,40 +215,98 @@ let find_integer_sqrt (n : int) : int =
 (* Find the maximum element in a list *)
 
 
+(* 
+  m = max l
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(*
-  Requires: true (works for any int list, including empty list)
-  Ensures: Returns Some m where m is the largest element if l is non-empty, or None if l is empty
+   Requires: l <> []
+   Ensures: 
+    (i) for all x in l, m >= x
+    (ii) m in l
 *)
-let max (l : int list) : int option =
-  let max_val = ref None in
-  let rest = ref l in
-  while !rest <> [] do
-    match (!max_val, !rest) with
-    | (Some current_max, h :: t) ->
-        if h > current_max then max_val := Some h;
-        rest := t
-    | (None, h :: t) ->
-        max_val := Some h;
-        rest := t
-    | _ -> failwith "max: unreachable code"
+
+(* Example: [1; 31; 3]
+
+
+Let's first check if list is empty. 
+  If empty, then error. 
+Else: 
+  We know that there is a head and tail such that l = head :: tail
+
+   (current_max, rest)
+   (1; [31; 3])
+   (31; [3])
+   (31; []) 
+
+   Return 31
+*)
+
+
+
+
+
+let max (l : int list) : int =
+  match l with 
+  | [] -> failwith "max: input list is empty"
+  | h :: t -> 
+    let current_max = ref h in 
+    let rest = ref t in
+    (* Loop invariant: current_max in l 
+                       for all x in l, not in rest, 
+                       current_max >= x 
+    *)
+    while !rest <> [] do
+      match !rest with
+      | (h :: t') ->
+        if h > !current_max then 
+          current_max := h; 
+        rest := t'
+      | _ -> failwith "max: unreachable code"
   done;
-  !max_val
+  !current_max
 ;;
+
+(* Proof of Correctness: 
+
+
+  Loop Invariant: current_max in l and for all x in l, not in rest, current_max >= x 
+
+  Initialisation: 
+    l = h :: t
+    current_max = h
+    rest = t
+
+    For this, 
+     current_max = h, hence in l
+     The only x in l, x not in rest is the head h. And current_max >= h.
+
+  Maintenance: 
+    Before the loop body: 
+
+    current_max = m
+    rest = h :: t
+
+    update: 
+      if h > m 
+        current_max = h
+      
+      rest = t
+
+    After the loop body: 
+    is current_max still in l? 
+    Case I: h > m. In that case, we updated it by an element of rest. Rest is a sublist of l. Hence true. 
+    Case II: not (h > m). In that case, we did not update current_max. Therefore, by loop invariant, it is true.
+
+    For x in l, x not in rest,  current_max >= x?
+    Then either x in l, and x not in rest before the loop, in which case... loop invariant.
+    Or x in l, and x = h, then current_max >= h by update, we have this property.
+
+  Termination:
+current_max in l and for all x in l, not in rest, current_max >= x 
+But rest = [] by loop condition. 
+
+Hence (i) current_max in l 
+      (ii) for all x in l, current_max >= x 
+*)
 
 (* Search for a target element in a list *)
 
@@ -246,6 +344,54 @@ let search_list (l : 'a list) (target: 'a) : bool =
 
 
 (* Is Prime? *)
+
+
+(* 
+   isprime (n : int) : bool ...
+
+   Requires: n > 1
+   Ensures: 
+
+   isprime(n) = false if
+    there is d <> 1, d <> n, n mod d = 0
+   isprime(n) = true otherwise.
+   
+   We can keep track of the largest number that divides n. 
+   Let d range from 2 to (n - 1)
+   We will check if d divides n. 
+*)
+
+
+(* 
+
+let isprime (n : int) : bool = 
+  let d = ref 2 in
+  let ans = ref false in 
+  while ((!d < n) && (ans = false)) do 
+    match (n mod !d) with 
+    | 0 -> ()
+    | _ -> ans := ans || true; 
+    d := !d + 1    
+  done
+  ans
+
+
+  Loop Invariant: There is no factor of n between 2 and d. 
+*)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 let is_prime (n: int) : bool =
   if n < 2 then false

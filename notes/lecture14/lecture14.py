@@ -13,13 +13,12 @@
 #     not !has_divisor
 # ;;
 
-from math import sqrt
 
 def is_prime(n: int) -> bool:
     if n < 2:
         return False
     else:
-        for i in range(2, int(sqrt(n))+1): 
+        for i in range(2, n - 1): 
             if n % i == 0:
                 return False
         return True
@@ -39,29 +38,10 @@ b = a
 a += [4]
 # print(b)
 
-
-
-
 a = "1, 2, 3"
 b = a
 a += ", 4"
 # print(b)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -83,12 +63,16 @@ a += [4]
 # Explanation: In this case, both 'a' and 'b' are referencing the same list in memory.
 # So, when we modify 'a' (by using '+=' to append [4]), 'b' also reflects the change.
 
-# Example 2: String Mutation
-s: str = "1, 2, 3"
-t: str = s  # t is a reference to s
-s += ", 4"  # Modifying s by concatenating ", 4"
 
-# After s += ", 4", s will become "1, 2, 3, 4", but t will remain "1, 2, 3"
+
+
+
+a: str  = "1, 2, 3"
+b: str  = a
+a += ", 4"
+
+
+# After a += ", 4", a will become "1, 2, 3, 4", but b will remain "1, 2, 3"
 # print("s:", s)  # Output: "1, 2, 3, 4"
 # print("t:", t)  # Output: "1, 2, 3"
 
@@ -209,10 +193,10 @@ self_ref_list.append(self_ref_list)
 
 
 
-# l = self_ref_list
-# while True:
-#     print(l[1])
-#     l = l[1]
+l = self_ref_list
+while True:
+     print(l[1])
+     l = l[1]
 
 
 
@@ -223,7 +207,7 @@ self_ref_list.append(self_ref_list)
 
 # More Funny Business!
 
-l = [1, 2, 3, 4, 5, 6]
+l = [1, "ueoe2", False, "hello", 5, 2.3]
 for x in l:
     l.remove(x)
 # print(l)
