@@ -58,20 +58,19 @@ let advance_rotors rotors positions =
   in
   advance rotors positions false
 
-let encrypt_char rotors positions ring_settings plugboard c =
+  let encrypt_char rotors positions ring_settings plugboard c =
   if not (Char.uppercase_ascii c >= 'A' && Char.uppercase_ascii c <= 'Z') then c
   else
     let c = Char.uppercase_ascii c in
     let c = apply_plugboard plugboard c in
     let input = Char.code c - Char.code 'A' in
-    let new_rotors, new_positions = advance_rotors rotors positions in
     let result = List.fold_left2 (fun acc rotor pos ->
       let ring = List.nth ring_settings (rotor - 1) in
-      rotor_forward rotor pos ring acc) input new_rotors new_positions in
+      rotor_forward rotor pos ring acc) input rotors positions in
     let result = apply_reflector result in
     let result = List.fold_left2 (fun acc rotor pos ->
       let ring = List.nth ring_settings (rotor - 1) in
-      rotor_backward rotor pos ring acc) result (List.rev new_rotors) (List.rev new_positions) in
+      rotor_backward rotor pos ring acc) result (List.rev rotors) (List.rev positions) in
     let output_char = Char.chr (result + Char.code 'A') in
     apply_plugboard plugboard output_char
 
@@ -79,8 +78,8 @@ let encrypt_string config text =
   let rec encrypt_chars rotors positions acc = function
     | [] -> String.concat "" (List.rev acc)
     | c :: cs ->
-        let encrypted = encrypt_char rotors positions config.ring_settings config.plugboard c in
         let new_rotors, new_positions = advance_rotors rotors positions in
+        let encrypted = encrypt_char new_rotors new_positions config.ring_settings config.plugboard c in
         encrypt_chars new_rotors new_positions (String.make 1 encrypted :: acc) cs
   in
   let chars = List.init (String.length text) (String.get text) in
