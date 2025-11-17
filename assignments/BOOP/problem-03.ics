@@ -1,30 +1,51 @@
 <<header
-assignment: Assignment 1
-student: [NAME]
-date: [DATE]
-collaborators: None
-problem: Problem 3: Egyptian Fractions
+    Name: 
+    Assignment: 
+    Date: 
+    Collaborators: 
+    Professor: 
 header>>
 
-<<problem 1: Problem 3: Egyptian Fractions
+
+<<problem 3: "Egyptian Fractions"
+
 <<blueprint
-requires:
+        <<functional-correctness
+            requires:
 
 
-ensures:
-
+            ensures:
+        functional-correctness>>
 blueprint>>
 
 <<operational steps
 
 operational steps>>
 
-<<ocaml code
+<<ocaml-code
 
-ocaml code>>
+ocaml-code>>
 
 <<proof
 
+        <<invariant
+            Initialisation: 
+            
+            Maintenance:
+            
+            Termination: 
+        invariant>>
+
+
+
+        <<induction
+            base case:
+
+            inductive hypothesis:
+
+            inductive step:
+        induction>>
+        
 proof>>
 
 problem>>
