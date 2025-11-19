@@ -1,5 +1,5 @@
 c Complex SAT formula with 20 variables and 50 clauses requiring extensive clause learning and backtracking
-c SAT
+c UNSAT
 p cnf 20 50
 1 2 3 4 5 0
 -1 6 7 8 9 0
