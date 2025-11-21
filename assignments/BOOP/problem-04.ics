@@ -6,25 +6,46 @@ collaborators: None
 problem: Problem 4: Stalin Sort
 header>>
 
-<<problem 1: Problem 4: Stalin Sort
+
+<<problem 4: "Stalin Sort"
+
 <<blueprint
-requires:
+        <<functional-correctness
+            requires:
 
 
-ensures:
-
+            ensures:
+        functional-correctness>>
 blueprint>>
 
 <<operational steps
 
 operational steps>>
 
-<<ocaml code
+<<ocaml-code
 
-ocaml code>>
+ocaml-code>>
 
 <<proof
 
+        <<invariant
+            Initialisation: 
+            
+            Maintenance:
+            
+            Termination: 
+        invariant>>
+
+
+
+        <<induction
+            base case:
+
+            inductive hypothesis:
+
+            inductive step:
+        induction>>
+        
 proof>>
 
 problem>>
